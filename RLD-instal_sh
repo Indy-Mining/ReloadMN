@@ -1,272 +1,84 @@
-#!/bin/bash
+#/bin/bash
 
-TMP_FOLDER=$(mktemp -d)
-CONFIG_FILE='RLD.conf'
-CONFIGFOLDER='/root/.RLD'
-COIN_DAEMON='RLDd'
-COIN_CLI='RLD-cli'
-COIN_PATH='/usr/local/bin/'
-COIN_TGZ='https://github.com/ReloadCoin/ReloadCore.git'
-COIN_ZIP=$(echo $COIN_TGZ | awk -F'/' '{print $NF}')
-COIN_NAME='RLD'
-COIN_PORT=24400
-RPC_PORT=24401
-
-NODEIP=$(curl -s4 api.ipify.org)
-
+echo "*******************************"
+echo "*                             *"
+echo "*      Reload Masternode       *"
+echo "*           SETUP             *"
+echo "*                             *"
+echo "*******************************"
+echo ""
+echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+echo "!                                                 !"
+echo "! Make sure you double check before hitting enter !"
+echo "!                                                 !"
+echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+echo && echo && echo
 
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 NC='\033[0m'
 
+IP==$(curl -s4 icanhazip.com)
+echo -e "${GREEN}Please enter your private key: (Copy from Windows and right click to paste and press enter)${NC}" 
+read KEY
+sleep 2
+echo ""
+echo ""
+echo -e "${RED}PLEASE KEEP YOUR HANDS AND FEET INSIDE THE RIDE AT ALL TIMES!${NC}"
+sleep 5
 
-function download_node() {
-  echo -e "Preparing to download ${GREEN}$COIN_NAME${NC}."
-  cd $TMP_FOLDER >/dev/null 2>&1
-  git clone $COIN_TGZ
-  compile_error
-  cd $COIN_ZIP --strip 2 >/dev/null 2>&1
-  compile_error
-  ./autogen.sh
-  compile error
-  ./configure
-  compile error
-  make 
-  compile error
-  cd src/
-  compile error
-  cp $COIN_DAEMON $COIN_CLI $COIN_PATH
-  cd - >/dev/null 2>&1
-  rm -rf $TMP_FOLDER >/dev/null 2>&1
-  clear
-}
+cd ~
+sudo apt-get install libqt5gui5 libqt5core5a libqt5dbus5 qttools5-dev qttools5-dev-tools libprotobuf-dev protobuf-compiler libminiupnpc-dev libboost-all-dev build-essential libtool autotools-dev autoconf pkg-config libssl-dev libevent-dev git build-essential libtool autoconf-archive autotools-dev automake pkg-config libssl-dev libevent-dev bsdmainutils
 
+sudo apt-get update -y
+sudo apt-get upgrade -y
+sudo apt-get dist-upgrade -y
+sudo apt-get install nano htop git -y
+sudo apt-get install build-essential libtool autotools-dev automake pkg-config libssl-dev libevent-dev bsdmainutils software-properties-common -y
+sudo apt-get install libboost-all-dev -y
+sudo apt-get install libzmq3-dev libminiupnpc-dev libssl-dev libevent-dev -y 
 
-function configure_systemd() {
-  cat << EOF > /etc/systemd/system/$COIN_NAME.service
-[Unit]
-Description=$COIN_NAME service
-After=network.target
-[Service]
-User=root
-Group=root
-Type=forking
-#PIDFile=$CONFIGFOLDER/$COIN_NAME.pid
-ExecStart=$COIN_PATH$COIN_DAEMON -daemon -conf=$CONFIGFOLDER/$CONFIG_FILE -datadir=$CONFIGFOLDER
-ExecStop=-$COIN_PATH$COIN_CLI -conf=$CONFIGFOLDER/$CONFIG_FILE -datadir=$CONFIGFOLDER stop
-Restart=always
-PrivateTmp=true
-TimeoutStopSec=60s
-TimeoutStartSec=10s
-StartLimitInterval=120s
-StartLimitBurst=5
-[Install]
-WantedBy=multi-user.target
-EOF
+sudo add-apt-repository ppa:bitcoin/bitcoin -y
+sudo apt-get update
+sudo apt-get install libdb4.8-dev libdb4.8++-dev -y
 
-  systemctl daemon-reload
-  sleep 3
-  systemctl start $COIN_NAME.service
-  systemctl enable $COIN_NAME.service >/dev/null 2>&1
+sudo git clone https://github.com/Indy-Mining/RLD-install-script.git
+cd RLD-install-script
 
-  if [[ -z "$(ps axo cmd:100 | egrep $COIN_DAEMON)" ]]; then
-    echo -e "${RED}$COIN_NAME is not running${NC}, please investigate. You should start by running the following commands as root:"
-    echo -e "${GREEN}systemctl start $COIN_NAME.service"
-    echo -e "systemctl status $COIN_NAME.service"
-    echo -e "less /var/log/syslog${NC}"
-    exit 1
-  fi
-}
+sleep 2
 
+echo ""
+echo ""
+echo -e "${GREEN}Moving stuff where it ${RED}NEEDS${NC} to be"
+sudo chmod +x ~/RLD-install-script/reloadd ~/RLD-install-script/reload-cli
+sudo mv ~/RLD-install-script/reloadd ~/RLD-install-script/reload-cli /usr/local/bin
+mkdir ~/.reload
+cd ~/.reload
+sudo reloadd -daemon
+sleep 2
+sudo reload-cli stop
+echo ""
+echo ""
+sleep 2
+echo -e "${GREEN}Creating the ${RED}Configuration File Now${NC}"
+sleep 2
+echo "rpcuser=user"`shuf -i 100000-10000000 -n 1` >> ~/.reload/reload.conf
+echo "rpcpassword=pass"`shuf -i 100000-10000000 -n 1` >> ~/.reload/reload.conf
+echo "rpcallowip=127.0.0.1" >> ~/.reload/reload.conf
+echo "port=24440" >> ~/.reload/reload.conf
+echo "staking=1" >> ~/.reload/reload.conf
+echo "logtimestamps=1" >> ~/.reload/reload.conf
+echo "listen=1" >> ~/.reload/reload.conf
+echo "server=1" >> ~/.reload/reload.conf
+echo "daemon=1" >> ~/.reload/reload.conf
+echo "maxconnections=250" >> ~/.reload/reload.conf
+echo "masternode=1" >> ~/.reload/reload.conf
+echo "masternodeaddr=$IP:24440" >> ~/.reload/reload.conf
+echo "masternodeprivkey=$KEY" >> ~/.reload/reload.conf
+echo -e "${GREEN}STARTING THE DAEMON${NC}"
 
-function create_config() {
-  mkdir $CONFIGFOLDER >/dev/null 2>&1
-  RPCUSER=$(tr -cd '[:alnum:]' < /dev/urandom | fold -w10 | head -n1)
-  RPCPASSWORD=$(tr -cd '[:alnum:]' < /dev/urandom | fold -w22 | head -n1)
-  cat << EOF > $CONFIGFOLDER/$CONFIG_FILE
-rpcuser=$RPCUSER
-rpcpassword=$RPCPASSWORD
-rpcport=$RPC_PORT
-rpcallowip=127.0.0.1
-listen=1
-server=1
-daemon=1
-port=$COIN_PORT
-EOF
-}
-
-function create_key() {
-  echo -e "Enter your ${RED}$COIN_NAME Masternode Private Key${NC}. Leave it blank to generate a new ${RED}Masternode Private Key${NC} for you:"
-  read -e COINKEY
-  if [[ -z "$COINKEY" ]]; then
-  $COIN_PATH$COIN_DAEMON -daemon
-  sleep 30
-  if [ -z "$(ps axo cmd:100 | grep $COIN_DAEMON)" ]; then
-   echo -e "${RED}$COIN_NAME server couldn not start. Check /var/log/syslog for errors.{$NC}"
-   exit 1
-  fi
-  COINKEY=$($COIN_PATH$COIN_CLI masternode genkey)
-  if [ "$?" -gt "0" ];
-    then
-    echo -e "${RED}Wallet not fully loaded. Let us wait and try again to generate the Private Key${NC}"
-    sleep 30
-    COINKEY=$($COIN_PATH$COIN_CLI masternode genkey)
-  fi
-  $COIN_PATH$COIN_CLI stop
-fi
-clear
-}
-
-function update_config() {
-  sed -i 's/daemon=1/daemon=0/' $CONFIGFOLDER/$CONFIG_FILE
-  cat << EOF >> $CONFIGFOLDER/$CONFIG_FILE
-logintimestamps=1
-maxconnections=16
-#bind=$NODEIP
-masternode=1
-externalip=$NODEIP:$COIN_PORT
-masternodeprivkey=$COINKEY
-#Nodes
-EOF
-}
-
-
-function enable_firewall() {
-  echo -e "Installing and setting up firewall to allow ingress on port ${GREEN}$COIN_PORT${NC}"
-  ufw allow $COIN_PORT/tcp comment "$COIN_NAME MN port" >/dev/null
-  ufw allow ssh comment "SSH" >/dev/null 2>&1
-  ufw limit ssh/tcp >/dev/null 2>&1
-  ufw default allow outgoing >/dev/null 2>&1
-  echo "y" | ufw enable >/dev/null 2>&1
-}
-
-
-function get_ip() {
-  declare -a NODE_IPS
-  for ips in $(netstat -i | awk '!/Kernel|Iface|lo/ {print $1," "}')
-  do
-    NODE_IPS+=($(curl --interface $ips --connect-timeout 2 -s4 api.ipify.org))
-  done
-
-  if [ ${#NODE_IPS[@]} -gt 1 ]
-    then
-      echo -e "${GREEN}More than one IP. Please type 0 to use the first IP, 1 for the second and so on...${NC}"
-      INDEX=0
-      for ip in "${NODE_IPS[@]}"
-      do
-        echo ${INDEX} $ip
-        let INDEX=${INDEX}+1
-      done
-      read -e choose_ip
-      NODEIP=${NODE_IPS[$choose_ip]}
-  else
-    NODEIP=${NODE_IPS[0]}
-  fi
-}
-
-
-function compile_error() {
-if [ "$?" -gt "0" ];
- then
-  echo -e "${RED}Failed to compile $COIN_NAME. Please investigate.${NC}"
-  exit 1
-fi
-}
-
-
-function checks() {
-if [[ $(lsb_release -d) != *16.04* ]]; then
-  echo -e "${RED}You are not running Ubuntu 16.04. Installation is cancelled.${NC}"
-  exit 1
-fi
-
-if [[ $EUID -ne 0 ]]; then
-   echo -e "${RED}$0 must be run as root.${NC}"
-   exit 1
-fi
-
-if [ -n "$(pidof $COIN_DAEMON)" ] || [ -e "$COIN_DAEMOM" ] ; then
-  echo -e "${RED}$COIN_NAME is already installed.${NC}"
-  exit 1
-fi
-}
-
-function prepare_system() {
-echo -e "Preparing the system to install ${GREEN}$COIN_NAME${NC} master node. That might take a while, so sit down and relax."
-apt-get update >/dev/null 2>&1
-DEBIAN_FRONTEND=noninteractive apt-get update > /dev/null 2>&1
-DEBIAN_FRONTEND=noninteractive apt-get -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" -y -qq upgrade >/dev/null 2>&1
-apt install -y software-properties-common >/dev/null 2>&1
-echo -e "${GREEN}Adding bitcoin PPA repository"
-apt-add-repository -y ppa:bitcoin/bitcoin >/dev/null 2>&1
-echo -e "Installing required packages, it may take some time to finish.${NC}"
-apt-get update >/dev/null 2>&1
-apt-get install -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" make software-properties-common \
-build-essential libtool autoconf libssl-dev libboost-dev libboost-chrono-dev libboost-filesystem-dev libboost-program-options-dev \
-libboost-system-dev libboost-test-dev libboost-thread-dev sudo automake git wget curl libdb4.8-dev bsdmainutils libdb4.8++-dev \
-libminiupnpc-dev libgmp3-dev ufw pkg-config libevent-dev  libdb5.3++ unzip libzmq5 >/dev/null 2>&1
-if [ "$?" -gt "0" ];
-  then
-    echo -e "${RED}Not all required packages were installed properly. Try to install them manually by running the following commands:${NC}\n"
-    echo "apt-get update"
-    echo "apt -y install software-properties-common"
-    echo "apt-add-repository -y ppa:bitcoin/bitcoin"
-    echo "apt-get update"
-    echo "apt install -y make build-essential libtool software-properties-common autoconf libssl-dev libboost-dev libboost-chrono-dev libboost-filesystem-dev \
-libboost-program-options-dev libboost-system-dev libboost-test-dev libboost-thread-dev sudo automake git curl libdb4.8-dev \
-bsdmainutils libdb4.8++-dev libminiupnpc-dev libgmp3-dev ufw pkg-config libevent-dev libdb5.3++ unzip libzmq5"
- exit 1
-fi
-clear
-echo -e "Checking if swap space is needed."
-PHYMEM=$(free -g|awk '/^Mem:/{print $2}')
-SWAP=$(free -g|awk '/^Swap:/{print $2}')
-if [ "$PHYMEM" -lt "2" ] && [ -n "$SWAP" ]
-  then
-    echo -e "${GREEN}Server is running with less than 2G of RAM without SWAP, creating 2G swap file.${NC}"
-    SWAPFILE=$(mktemp)
-    dd if=/dev/zero of=$SWAPFILE bs=1024 count=2M
-    chmod 600 $SWAPFILE
-    mkswap $SWAPFILE
-    swapon -a $SWAPFILE
-else
-  echo -e "${GREEN}Server running with at least 2G of RAM, no swap needed.${NC}"
-fi
-clear
-}
-
-function important_information() {
- echo -e "================================================================================================================================"
- echo -e "$COIN_NAME Masternode is up and running listening on port ${RED}$COIN_PORT${NC}."
- echo -e "Configuration file is: ${RED}$CONFIGFOLDER/$CONFIG_FILE${NC}"
- echo -e "Start: ${RED}systemctl start $COIN_NAME.service${NC}"
- echo -e "Stop: ${RED}systemctl stop $COIN_NAME.service${NC}"
- echo -e "VPS_IP:PORT ${RED}$NODEIP:$COIN_PORT${NC}"
- echo -e "MASTERNODE PRIVATEKEY is: ${RED}$COINKEY${NC}"
- echo -e "Please check ${RED}$COIN_NAME${NC} daemon is running with the following command: ${RED}systemctl status $COIN_NAME.service${NC}"
- echo -e "Use ${RED}$COIN_CLI masternode status${NC} to check your MN."
- if [[ -n $SENTINEL_REPO  ]]; then
-  echo -e "${RED}Sentinel${NC} is installed in ${RED}$CONFIGFOLDER/sentinel${NC}"
-  echo -e "Sentinel logs is: ${RED}$CONFIGFOLDER/sentinel.log${NC}"
- fi
- echo -e "================================================================================================================================"
-}
-
-function setup_node() {
-  get_ip
-  create_config
-  create_key
-  update_config
-  enable_firewall
-  important_information
-  configure_systemd
-}
-
-
-##### Main #####
-clear
-
-checks
-prepare_system
-download_node
-setup_node
+sudo reloadd -daemon
+sleep 2
+echo ""
+echo ""
+echo -e "Thank you for installing the Reload wallet.  Please move onto the ${RED}NEXT${NC} step."
