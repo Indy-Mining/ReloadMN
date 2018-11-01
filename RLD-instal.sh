@@ -50,8 +50,8 @@ sleep 2
 echo ""
 echo ""
 echo -e "${GREEN}Moving stuff where it ${RED}NEEDS${NC} to be"
-sudo chmod +x ~/RLD-install-script/reloadd ~/RLD-install-script/reload-cli
-sudo mv ~/RLD-install-script/reloadd ~/RLD-install-script/reload-cli /usr/local/bin
+sudo chmod +x ~/ReloadMN/reloadd ~/ReloadMN/reload-cli
+sudo mv ~/ReloadMN/reloadd ~/ReloadMN/reload-cli /usr/local/bin
 mkdir ~/.reload
 cd ~/.reload
 sudo reloadd -daemon
