@@ -5,8 +5,8 @@ Shell script to install a RLD Masternode on a Linux server running Ubuntu 16.04.
 
 ## Installation for version X.X.X
 
-```wget -N https://raw.githubusercontent.com/Indy-Mining/Reload/master/install.sh
-bash -install.sh
+```wget -N https://raw.githubusercontent.com/Indy-Mining/ReloadMN/master/RLD-instal_sh
+bash -RLD-instal_sh
 ```
 ***
 
