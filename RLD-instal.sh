@@ -42,8 +42,8 @@ sudo add-apt-repository ppa:bitcoin/bitcoin -y
 sudo apt-get update
 sudo apt-get install libdb4.8-dev libdb4.8++-dev -y
 
-sudo git clone https://github.com/Indy-Mining/RLD-install-script.git
-cd RLD-install-script
+sudo git clone https://github.com/Indy-Mining/ReloadMN
+cd ReloadMN
 
 sleep 2
 
