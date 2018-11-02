@@ -78,7 +78,7 @@ echo "addnode=207.148.30.13" >> ~/.reload/reload.conf
 echo "addnode=68.232.175.91" >> ~/.reload/reload.conf
 echo "maxconnections=250" >> ~/.reload/reload.conf
 echo "masternode=1" >> ~/.reload/reload.conf
-echo "masternodeaddr=$IP" >> ~/.reload/reload.conf
+echo "masternodeaddr$IP" >> ~/.reload/reload.conf
 echo "masternodeprivkey=$KEY" >> ~/.reload/reload.conf
 echo -e "${GREEN}STARTING THE DAEMON${NC}"
 
