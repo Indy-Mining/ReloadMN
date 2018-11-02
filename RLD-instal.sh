@@ -58,13 +58,14 @@ cd ~/.reload
 sudo reloadd -daemon
 sleep 2
 sudo reload-cli stop
+sleep 5
 echo ""
 echo ""
 sleep 2
 echo -e "${GREEN}Creating the ${RED}Configuration File Now${NC}"
 sleep 2
-echo "rpcuser=user"`shuf -i 100000-10000000 -n 1` >> ~/.reload/reload.conf
-echo "rpcpassword=pass"`shuf -i 100000-10000000 -n 1` >> ~/.reload/reload.conf
+echo "rpcuser="`shuf -i 100000-10000000 -n 1` >> ~/.reload/reload.conf
+echo "rpcpassword="`shuf -i 100000-10000000 -n 1` >> ~/.reload/reload.conf
 echo "rpcallowip=127.0.0.1" >> ~/.reload/reload.conf
 echo "port=24440" >> ~/.reload/reload.conf
 echo "staking=1" >> ~/.reload/reload.conf
@@ -72,9 +73,12 @@ echo "logtimestamps=1" >> ~/.reload/reload.conf
 echo "listen=1" >> ~/.reload/reload.conf
 echo "server=1" >> ~/.reload/reload.conf
 echo "daemon=1" >> ~/.reload/reload.conf
+echo "addnode=149.28.53.180" >> ~/.reload/reload.conf
+echo "addnode=207.148.30.13" >> ~/.reload/reload.conf
+echo "addnode=68.232.175.91" >> ~/.reload/reload.conf
 echo "maxconnections=250" >> ~/.reload/reload.conf
 echo "masternode=1" >> ~/.reload/reload.conf
-echo "masternodeaddr=$IP:24440" >> ~/.reload/reload.conf
+echo "masternodeaddr=$IP" >> ~/.reload/reload.conf
 echo "masternodeprivkey=$KEY" >> ~/.reload/reload.conf
 echo -e "${GREEN}STARTING THE DAEMON${NC}"
 
