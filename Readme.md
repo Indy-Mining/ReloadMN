@@ -92,6 +92,7 @@ Using notepad, open the folder named
 masternode.conf
 ```
 Copy and paste your masternode line into the file, save and close.  It should look something like this:
+
 MN1 146.27.111.47:24440 2srx3Z6TXPQmQqUNqMZy2Ktcem6fJPHyX8acZU6zBht8fgFkcN7 79f57fff8f781d86d1ea9c4e7c513cc22cbb817ef2f29ce7cd9f0b553126fb17 0
 
 Note, any line with a # sign in front of it will be ignored. 
@@ -100,7 +101,9 @@ Now close the desktop Reload wallet and restart it.
 
 Make sure your the transaction for your collateral has 16 confirmations. 
 Go to Masternode Tab. If you tab is not shown, please enable it from: Settings - Options - Wallet - Show Masternodes Tab
+
 Click Update status to see your node. If it is not shown, close the wallet and start it again. Make sure the wallet is unlocked.
+
 Select your MN and click Start Alias to start it.
 
 Check your masternode status by running the following command. If you get **status 4**, it means your masternode is active.
