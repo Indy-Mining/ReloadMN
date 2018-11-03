@@ -38,7 +38,7 @@ Copy and paste this in your notepad document for later use.
 ## VPS Installation for version X.X.X
 
 Next you will need to access your VPS.  Using PuTTY, paste the IP address of your VPS into the box marked IP address.  
-Click the open button.  If this is your first time accessing this VPS PuTTY will ask you to verify that you want to access it. 
+Click the open button.  If this is your first time accessing this VPS, PuTTY will ask you to verify that you want to access it. 
 Log in as root and use the password provided by the VPS service.  
 
 Next copy and paste the following command and hit enter.  Use the right mouse button to paste.  
