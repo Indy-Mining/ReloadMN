@@ -69,7 +69,7 @@ You will need to configure the desktop wallet accordingly. Here are the steps:
 
 6.Type the following command: masternode outputs.  Save the response in your note pad.  
 
-7. In your notepad you are going to create the folloing line based on the information you have saved. It should look something like the example above.
+7.In your notepad you are going to create the folloing line based on the information you have saved. It should look something like the example above.
 
 ```
 Alias Address Genkey TxHash TxIndex
