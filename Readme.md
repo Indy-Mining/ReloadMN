@@ -56,12 +56,19 @@ You may want to check in from time to time depending on the memory of your VPS t
 ## Desktop wallet setup
 
 You will need to configure the desktop wallet accordingly. Here are the steps:
+
 1.Open the Reload Desktop Wallet.
+
 2.Go to RECEIVE and create a New Address: MN1
+
 3.Send 15,000,000 RLD to MN1.
+
 4.Wait for 16 confirmations.
+
 5.Go to Tools -> "Debug Console"
+
 6.Type the following command: masternode outputs.  Save the response in your note pad.  
+
 7. In your notepad you are going to create the folloing line based on the information you have saved. It should look something like the example above.
 
 ```
