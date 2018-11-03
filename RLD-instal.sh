@@ -44,9 +44,6 @@ sudo apt-get update
 sudo apt-get install libdb4.8-dev libdb4.8++-dev -y
 
 sudo git clone https://github.com/Indy-Mining/ReloadMN
-cd ReloadMN
-
-sleep 2
 
 echo ""
 echo ""
@@ -55,9 +52,9 @@ sudo chmod +x ~/ReloadMN/reloadd ~/ReloadMN/reload-cli
 sudo mv ~/ReloadMN/reloadd ~/ReloadMN/reload-cli /usr/local/bin
 mkdir ~/.reload
 cd ~/.reload
-sudo reloadd -daemon
+reloadd -daemon
 sleep 2
-sudo reload-cli stop
+reload-cli stop
 sleep 5
 echo ""
 echo ""
@@ -82,7 +79,7 @@ echo "masternodeaddr$IP" >> ~/.reload/reload.conf
 echo "masternodeprivkey=$KEY" >> ~/.reload/reload.conf
 echo -e "${GREEN}STARTING THE DAEMON${NC}"
 
-sudo reloadd -daemon
+reloadd -daemon
 sleep 2
 echo ""
 echo ""
