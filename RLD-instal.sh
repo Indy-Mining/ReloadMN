@@ -50,15 +50,13 @@ echo ""
 echo -e "${GREEN}Moving stuff where it ${RED}NEEDS${NC} to be"
 chmod +x /root/ReloadMN/reloadd /root/ReloadMN/reload-cli
 mv /root/ReloadMN/reloadd /root/ReloadMN/reload-cli /usr/local/bin
-mkdir /root/.reload
-cd /root/.reload
-reloadd -daemon
 sleep 2
+reloadd -daemon
+sleep 5
 reload-cli stop
 sleep 5
 echo ""
 echo ""
-sleep 2
 echo -e "${GREEN}Creating the ${RED}Configuration File Now${NC}"
 sleep 2
 echo "rpcuser="`shuf -i 100000-10000000 -n 1` >> /root/.reload/reload.conf
