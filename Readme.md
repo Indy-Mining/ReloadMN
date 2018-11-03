@@ -9,10 +9,15 @@ Next, I like to make a notepad file with all the information I will need for my 
 
 MN1	
 IP		146.27.111.47
+
 password	qB*6}2457g2CTGaC
+
 gen key 	2srx3Z6TXPQmQqUNqMZy2Ktcem6fJPHyX8acZU6zBht8fgFkcN7
+
 address		PPLAUoRpp9ycg5Qd9sjtbw1E8JjqPdsKJf
+
 TXid		79f57fff8f781d86d1ea9c4e7c513cc72ggbb817ef2f29ce7cd9f0b553126fb17 0
+
 MN1 146.27.111.47:24440 2srx3Z6TXPQmQqUNqMZy2Ktcem6fJPHyX8acZU6zBht8fgFkcN7 79f57fff8f781d86d1ea9c4e7c513cc22cbb817ef2f29ce7cd9f0b553126fb17 0
 
 As you get this information save it in this file for later.  
