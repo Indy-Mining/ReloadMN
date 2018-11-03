@@ -44,14 +44,14 @@ sudo apt-get update
 sudo apt-get install libdb4.8-dev libdb4.8++-dev -y
 
 sudo git clone https://github.com/Indy-Mining/ReloadMN
-
+cd
 echo ""
 echo ""
 echo -e "${GREEN}Moving stuff where it ${RED}NEEDS${NC} to be"
-sudo chmod +x ~/ReloadMN/reloadd ~/ReloadMN/reload-cli
-sudo mv ~/ReloadMN/reloadd ~/ReloadMN/reload-cli /usr/local/bin
-mkdir ~/.reload
-cd ~/.reload
+chmod +x /root/ReloadMN/reloadd /root/ReloadMN/reload-cli
+mv /root/ReloadMN/reloadd /root/ReloadMN/reload-cli /usr/local/bin
+mkdir /root/.reload
+cd /root/.reload
 reloadd -daemon
 sleep 2
 reload-cli stop
@@ -61,22 +61,22 @@ echo ""
 sleep 2
 echo -e "${GREEN}Creating the ${RED}Configuration File Now${NC}"
 sleep 2
-echo "rpcuser="`shuf -i 100000-10000000 -n 1` >> ~/.reload/reload.conf
-echo "rpcpassword="`shuf -i 100000-10000000 -n 1` >> ~/.reload/reload.conf
-echo "rpcallowip=127.0.0.1" >> ~/.reload/reload.conf
-echo "port=24440" >> ~/.reload/reload.conf
-echo "staking=1" >> ~/.reload/reload.conf
-echo "logtimestamps=1" >> ~/.reload/reload.conf
-echo "listen=1" >> ~/.reload/reload.conf
-echo "server=1" >> ~/.reload/reload.conf
-echo "daemon=1" >> ~/.reload/reload.conf
-echo "addnode=149.28.53.180" >> ~/.reload/reload.conf
-echo "addnode=207.148.30.13" >> ~/.reload/reload.conf
-echo "addnode=68.232.175.91" >> ~/.reload/reload.conf
-echo "maxconnections=250" >> ~/.reload/reload.conf
-echo "masternode=1" >> ~/.reload/reload.conf
-echo "masternodeaddr$IP" >> ~/.reload/reload.conf
-echo "masternodeprivkey=$KEY" >> ~/.reload/reload.conf
+echo "rpcuser="`shuf -i 100000-10000000 -n 1` >> /root/.reload/reload.conf
+echo "rpcpassword="`shuf -i 100000-10000000 -n 1` >> /root/.reload/reload.conf
+echo "rpcallowip=127.0.0.1" >> /root/.reload/reload.conf
+echo "port=24440" >> /root/.reload/reload.conf
+echo "staking=1" >> /root/.reload/reload.conf
+echo "logtimestamps=1" >> /root/.reload/reload.conf
+echo "listen=1" >> /root/.reload/reload.conf
+echo "server=1" >> /root/.reload/reload.conf
+echo "daemon=1" >> /root/.reload/reload.conf
+echo "addnode=149.28.53.180" >> /root/.reload/reload.conf
+echo "addnode=207.148.30.13" >> /root/.reload/reload.conf
+echo "addnode=68.232.175.91" >> /root/.reload/reload.conf
+echo "maxconnections=250" >> /root/.reload/reload.conf
+echo "masternode=1" >> /root/.reload/reload.conf
+echo "masternodeaddr$IP" >> /root/.reload/reload.conf
+echo "masternodeprivkey=$KEY" >> /root/.reload/reload.conf
 echo -e "${GREEN}STARTING THE DAEMON${NC}"
 
 reloadd -daemon
