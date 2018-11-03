@@ -44,7 +44,7 @@ sudo apt-get update
 sudo apt-get install libdb4.8-dev libdb4.8++-dev -y
 
 sudo git clone https://github.com/Indy-Mining/ReloadMN
-cd
+#cd
 echo ""
 echo ""
 echo -e "${GREEN}Moving stuff where it ${RED}NEEDS${NC} to be"
