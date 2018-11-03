@@ -27,7 +27,6 @@ echo ""
 echo -e "${RED}PLEASE KEEP YOUR HANDS AND FEET INSIDE THE RIDE AT ALL TIMES!${NC}"
 sleep 5
 
-cd ~
 sudo apt-get install libqt5gui5 libqt5core5a libqt5dbus5 qttools5-dev qttools5-dev-tools libprotobuf-dev protobuf-compiler libminiupnpc-dev libboost-all-dev build-essential libtool autotools-dev autoconf pkg-config libssl-dev libevent-dev git build-essential libtool autoconf-archive autotools-dev automake pkg-config libssl-dev libevent-dev bsdmainutils
 
 sudo apt-get update -y
@@ -44,7 +43,7 @@ sudo apt-get update
 sudo apt-get install libdb4.8-dev libdb4.8++-dev -y
 
 sudo git clone https://github.com/Indy-Mining/ReloadMN
-#cd
+
 echo ""
 echo ""
 echo -e "${GREEN}Moving stuff where it ${RED}NEEDS${NC} to be"
