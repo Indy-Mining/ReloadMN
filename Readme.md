@@ -8,15 +8,16 @@ Next you will need to download the most recent version of the Reload wallet onto
 Next, I like to make a notepad file with all the information I will need for my masternode build.  Here is how I set up the information.  Do not just copy the informaiton here, this is not actual information it is just here as an example. 
 
 MN1	
-IP		146.27.111.47
 
-password	qB*6}2457g2CTGaC
+IP:       146.27.111.47
 
-gen key 	2srx3Z6TXPQmQqUNqMZy2Ktcem6fJPHyX8acZU6zBht8fgFkcN7
+password: qB*6}2457g2CTGaC
 
-address		PPLAUoRpp9ycg5Qd9sjtbw1E8JjqPdsKJf
+gen key: 	2srx3Z6TXPQmQqUNqMZy2Ktcem6fJPHyX8acZU6zBht8fgFkcN7
 
-TXid		79f57fff8f781d86d1ea9c4e7c513cc72ggbb817ef2f29ce7cd9f0b553126fb17 0
+address:	PPLAUoRpp9ycg5Qd9sjtbw1E8JjqPdsKJf
+
+TXid: 		79f57fff8f781d86d1ea9c4e7c513cc72ggbb817ef2f29ce7cd9f0b553126fb17 0
 
 MN1 146.27.111.47:24440 2srx3Z6TXPQmQqUNqMZy2Ktcem6fJPHyX8acZU6zBht8fgFkcN7 79f57fff8f781d86d1ea9c4e7c513cc22cbb817ef2f29ce7cd9f0b553126fb17 0
 
