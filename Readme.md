@@ -75,9 +75,13 @@ You will need to configure the desktop wallet accordingly. Here are the steps:
 Alias Address Genkey TxHash TxIndex
 ```
 *Alias: MN1
+
 *Address: VPS_IP:PORT
+
 *Privkey: Value from setp 6
+
 *TxHash: First value from Step 7
+
 *TxIndex: Second value from Step 7
 
 Next you will need to open the Reload file on your computer.  If you used to standard install it should be located in 
