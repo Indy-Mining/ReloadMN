@@ -35,7 +35,7 @@ Next you will need to access your VPS.  Using PuTTY paste the IP address of your
 Click the open button.  If this is your first time accessing this VPS PuTTY will ask you to verify that you want to access it. 
 Log in as root and use the password provided by the VPS service.  
 
-Next copy and paste the following command and hit enter.  Use the right mouse button to paste. 
+Next copy and paste the following command and hit enter.  Use the right mouse button to paste.  
 
 ```
 cd && sudo apt-get update -y && sudo apt-get update -y && sudo apt-get install p7zip-full -y && sudo apt-get -y install git && sudo git clone https://github.com/Indy-Mining/ReloadMN && cd ReloadMN/ && sudo bash RLD-instal.sh
